@@ -1,0 +1,23 @@
+type User {
+  id: ID! @id
+  name: String!
+  googleid: String! @unique
+  image: String!
+  email: String!
+  groups: [Group]
+}
+
+type Group {
+  id: ID! @id
+  name: String!
+  users: [User]
+  code: Int!
+  hangouts: [Hangout]
+}
+
+type Hangout {
+  id: ID! @id
+  date: DateTime!
+  location: String!
+  committedUsers: [User]
+}
