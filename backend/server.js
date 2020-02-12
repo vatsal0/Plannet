@@ -14,6 +14,8 @@ app.use(bodyParser.json());
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+  res.header("Access-Control-Allow-Credentials", "true");
   next();
 });
 
@@ -80,6 +82,46 @@ app.post('/userinfo', function(req, res) {
   })
   .then(function (response) {
     res.send(response.data.data.users[0]);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+});
+
+app.post('/groupname', function(req, res) {
+  let groupid = req.body.id;
+  let newName = req.body.name
+  axios({
+    method: 'post',
+    url: 'https://us1.prisma.sh/vatsal-baherwani/Plannet/dev',
+    data: {query: queries.CHANGE_GROUP_NAME, variables: {id: groupid, newname: newName}},
+    headers: { 'Content-Type': 'application/json' },
+    responseType: "json",
+  })
+  .then(function (response) {
+    res.send(response.data.data.updateGroup);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+});
+
+app.post('/join', function(req, res) {
+  let code = req.body.code;
+  let userid = req.body.userid;
+  axios({
+    method: 'post',
+    url: 'https://us1.prisma.sh/vatsal-baherwani/Plannet/dev',
+    data: {query: queries.JOIN_GROUP, variables: {userid: userid, groupcode: code}},
+    headers: { 'Content-Type': 'application/json' },
+    responseType: "json",
+  })
+  .then(function (response) {
+    if (response.data.errors) {
+      res.send(["none"])
+    }else {
+      res.send(response.data.data.updateGroup.users);
+    }
   })
   .catch(function(error) {
     console.log(error);

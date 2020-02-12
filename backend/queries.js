@@ -104,9 +104,32 @@ query userInfo($id:String!) {
   }
 }`
 
+const CHANGE_GROUP_NAME = `
+mutation changeGroupName($id:ID!, $newname:String!) {
+  updateGroup(
+    where:{id:$id}
+    data:{name:$newname}
+  ) { name }
+}`
+
+const JOIN_GROUP = `
+mutation joinGroup($userid:String!, $groupcode:String!) {
+  updateGroup(where:{code:$groupcode} data:{users:{
+    connect:{googleid:$userid}
+  }}) {
+    users {
+      name
+      email
+      image
+    }
+  }
+}`
+
 module.exports = {
     LOGIN: LOGIN_MUTATION,
     NEW_GROUP: NEW_GROUP,
     USER_GROUP_QUERY: USER_GROUP_QUERY,
-    USER_INFO: USER_INFO
+    USER_INFO: USER_INFO,
+    CHANGE_GROUP_NAME: CHANGE_GROUP_NAME,
+    JOIN_GROUP: JOIN_GROUP
 }
