@@ -16,10 +16,41 @@
 </head>
 <html>
 <body>
+
     <h1 id="user-heading">Welcome, </h1>
-    <h3>My groups</h3>
-    <div class="list-group" id="groups-box">
-        <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+    <input type="text" class="form-control" id="join-code" placeholder="Enter a group code:" style="width: 200px;">
+    <button type="button" class="btn btn-primary" id="join-button">Join</button>
+    <button type="button" class="btn btn-success" id="create-button">Create</button>
+
+    <div class="card" style="width:600px">
+        <h5 style="text-align: center;">My groups</h5>
+        <div class="list-group" id="groups-box"></div>
     </div>
+    <div class="card" style="width:600px; display: flex; flex-direction: column;" id="group-info">
+        <div style="display: flex; flex-direction: row; flex-grow: 1; justify-content: space-evenly;">
+            <div>
+                <h5 style="text-align: center; display: inline;" id="group-name">Edit</button>name</h5>
+                <button type="button" style="display: inline;" class="btn btn-primary" id="change-name">Edit</button>
+            </div>
+            
+            <h5 style="text-align: center;" id="group-code">name</h5>
+            <button type="button" class="btn btn-success" id="new-hangout">New Hangout</button>
+        </div>
+        <div style="flex-grow: 5;">
+            <div class="list-group" id="members-box"></div>
+            
+            <div class="list-group" id="hangouts-box"></div>
+        </div>
+
+        <form style="width: 20%; height: 20%; left: 40%; top: 40%; position: absolute; z-index: 100; display: none;" >
+            <div class="form-group card">
+              <label for="name-input-box">Change name</label>
+              <input type="text" class="form-control" id="name-input-box" placeholder="Enter here:">
+              <button type="button" class="btn btn-primary" id="name-change-button">Confirm</button>
+            </div>
+        </form>
+    </div>
+    
+    
 </body>
 </html>

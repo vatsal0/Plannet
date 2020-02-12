@@ -11,7 +11,7 @@ type Group {
   id: ID! @id
   name: String!
   users: [User]
-  code: Int!
+  code: String! @unique
   hangouts: [Hangout]
 }
 
