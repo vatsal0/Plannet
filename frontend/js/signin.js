@@ -1,5 +1,5 @@
 let SERVER = "https://inexpensive-beam-acp7cy33yt.glitch.me/"
-//SERVER = "http://localhost:8000"
+SERVER = "http://localhost:8000"
 
 function onSignIn(googleUser) {
     //Generate an authenticated token to be verified by the server

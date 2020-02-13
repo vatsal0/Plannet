@@ -1,7 +1,7 @@
 let loc, placeName, userdata;
 
 let SERVER = "https://inexpensive-beam-acp7cy33yt.glitch.me/"
-//SERVER = "http://localhost:8000"
+SERVER = "http://localhost:8000"
 
 function updateUserData() {
     fetch(SERVER+"/userinfo/", {
@@ -37,6 +37,8 @@ $(document).ready(function(){
     placeholder: "Where we posting up?"
     });
     
+    //Prevent materialize from fucking the input box up
+
     geocoder.on('result', function(e) {
         //Just api stuff, you can console.log if you want to see all the info
         let info = e.result;
@@ -48,6 +50,11 @@ $(document).ready(function(){
     
     // Add the geocoder to the map
     map.addControl(geocoder);
+
+    $('.datepicker').datepicker();
+    $('.timepicker').timepicker();
+    
+    $(".mapboxgl-ctrl-geocoder--input").addClass("browser-default")
     $("#create-button").click(function(){
         let time = $("#time").val();
         if (time != "" && loc != null) {

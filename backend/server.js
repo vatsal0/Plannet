@@ -5,6 +5,7 @@ var hri = require('human-readable-ids').hri;
 var bodyParser     =        require("body-parser");
 var app = express();
 const {OAuth2Client} = require('google-auth-library');
+//const CLIENT_ID = "331697660397-knlnre8o1qb7qmpnds2j07nhsntmdp7e.apps.googleusercontent.com"//For server
 const CLIENT_ID = "975459361176-0lh8jpvfrk8rv9op4ucfd6j0i84p6bop.apps.googleusercontent.com"
 const client = new OAuth2Client(CLIENT_ID);
 

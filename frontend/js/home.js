@@ -1,7 +1,7 @@
 let userdata;
 
 let SERVER = "https://inexpensive-beam-acp7cy33yt.glitch.me/"
-//SERVER = "http://localhost:8000"
+SERVER = "http://localhost:8000"
 //You can 99% of the time rely on userdata to be up to date, but if it isn't just call this function again
 function updateUserData() {
     fetch(SERVER+"/userinfo/", {
