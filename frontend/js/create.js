@@ -35,10 +35,12 @@ $(document).ready(function(){
     });
     
     geocoder.on('result', function(e) {
+        //Just api stuff, you can console.log if you want to see all the info
         let info = e.result;
-        placeName = info.place_name;
+        placeName = info.text;
+        if (info.address) placeName = info.address + " " + placeName;
         loc = info.center;
-        console.log(placeName, loc);
+        //console.log(info);
     });
     
     // Add the geocoder to the map
