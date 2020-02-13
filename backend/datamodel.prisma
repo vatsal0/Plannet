@@ -5,6 +5,7 @@ type User {
   image: String!
   email: String!
   groups: [Group]
+  committedHangouts: [Hangout]
 }
 
 type Group {
@@ -19,5 +20,6 @@ type Hangout {
   id: ID! @id
   date: DateTime!
   location: String!
+  placeName: String!
   committedUsers: [User]
 }

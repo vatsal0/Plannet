@@ -42,10 +42,32 @@ function updateGroupBox(groups) {
     }
 }
 
+function dateFromISO8601(isostr) {
+    var parts = isostr.match(/\d+/g);
+    return new Date(parts[0], parts[1] - 1, parts[2], parts[3], parts[4], parts[5]).toString().split(":00")[0];
+}
+
+function sortedHangouts(hangouts) {
+    let list = [];
+    for (let i = 0; i < hangouts.length; i++) {
+        let hangout = hangouts[i];
+        let timestamp = Date.parse(hangout.date);
+        if (timestamp > Date.now()-(new Date()).getTimezoneOffset()*60000) {
+            let insert
+            for(insert = 0; insert <list.length; insert++) {
+                if (timestamp < Date.parse(list[insert].date)) break;
+            }
+            list.splice(insert,0,hangout);
+        }
+    }
+    return list;
+}
+
 function updateGroupInfo(group) {
     $("#group-name").text(group.name);
     $("#group-code").text("Join code: " + group.code);
     $("#members-box").empty()
+    $("#hangouts-box").empty()
     for(let i = 0; i < group.users.length; i++) {
         $("#members-box").append(`
         <li class="list-group-item"; style="display: flex; flex-direction: row;">
@@ -56,6 +78,25 @@ function updateGroupInfo(group) {
             </div>
         </li>`);
     }
+    let hangouts = sortedHangouts(group.hangouts)
+    for(let i = 0; i < hangouts.length; i++) {
+        let date = dateFromISO8601(hangouts[i].date);
+        $("#hangouts-box").append(`
+        <li class="list-group-item"; style="display: flex; flex-direction: row;">
+            <div style="display: flex; flex-direction: column">
+                <h4>`+hangouts[i].placeName+`</h4>
+                <div style="display: flex; flex-direction: row">
+                    <h6>`+date+`</h6>
+                    <h4>`+hangouts[i].committedUsers.length+` people</h4>
+                    <button type="button" class="btn btn-primary" id="view-`+i+`">View</button>
+                </div>
+            </div>
+        </li>`);
+
+        $("#view-"+i).click(function() {
+            window.location.href = "/hangout.html?id=" + hangouts[i].id;
+        });
+    }
 }
 
 $(document).ready(async function() {
@@ -65,6 +106,9 @@ $(document).ready(async function() {
     })
     $("#edit-name").click(function(){
         $("#name-change").css("visibility", "visible");
+    });
+    $("#new-hangout").click(function(){
+        window.location.href = "/create.html";
     });
     $("#name-change-button").click(function(){
         let newName = $("#name-input-box").val();

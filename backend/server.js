@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Origin", "* ");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
   res.header("Access-Control-Allow-Credentials", "true");
@@ -122,6 +122,79 @@ app.post('/join', function(req, res) {
     }else {
       res.send(response.data.data.updateGroup.users);
     }
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+});
+
+app.post('/newhangout', function(req, res) {
+  let groupid = req.body.groupid;
+  let location = req.body.location;
+  let time = req.body.time;
+  let placeName = req.body.name;
+  axios({
+    method: 'post',
+    url: 'https://us1.prisma.sh/vatsal-baherwani/Plannet/dev',
+    data: {query: queries.CREATE_HANGOUT, variables: {groupid: groupid, location: location, time: time, name: placeName}},
+    headers: { 'Content-Type': 'application/json' },
+    responseType: "json",
+  })
+  .then(function (response) {
+    res.send(response.data.data.updateGroup);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+});
+
+app.post('/hangoutinfo', function(req, res) {
+  let id = req.body.id;
+  axios({
+    method: 'post',
+    url: 'https://us1.prisma.sh/vatsal-baherwani/Plannet/dev',
+    data: {query: queries.HANGOUT_INFO, variables: {id:id}},
+    headers: { 'Content-Type': 'application/json' },
+    responseType: "json",
+  })
+  .then(function (response) {
+    res.send(response.data.data.hangouts[0]);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+});
+
+app.post('/commit', function(req, res) {
+  let userid = req.body.userid;
+  let hangoutid = req.body.hangoutid;
+  axios({
+    method: 'post',
+    url: 'https://us1.prisma.sh/vatsal-baherwani/Plannet/dev',
+    data: {query: queries.COMMIT, variables: {userid:userid, hangoutid:hangoutid}},
+    headers: { 'Content-Type': 'application/json' },
+    responseType: "json",
+  })
+  .then(function (response) {
+    res.send(response.data.data.updateHangout);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+});
+
+app.post('/decommit', function(req, res) {
+  let userid = req.body.userid;
+  let hangoutid = req.body.hangoutid;
+  axios({
+    method: 'post',
+    url: 'https://us1.prisma.sh/vatsal-baherwani/Plannet/dev',
+    data: {query: queries.DECOMMIT, variables: {userid:userid, hangoutid:hangoutid}},
+    headers: { 'Content-Type': 'application/json' },
+    responseType: "json",
+  })
+  .then(function (response) {
+    res.send(response.data.data.updateHangout);
   })
   .catch(function(error) {
     console.log(error);

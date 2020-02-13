@@ -95,7 +95,7 @@ query userInfo($id:String!) {
         id
         date
         location
-        
+        placeName
         committedUsers {
           name
         }
@@ -125,11 +125,105 @@ mutation joinGroup($userid:String!, $groupcode:String!) {
   }
 }`
 
+const CREATE_HANGOUT = `
+mutation newHangout($groupid:ID!,$location:String!,$time:DateTime!,$name:String!){
+  updateGroup(
+    where:{id:$groupid}
+    data:{
+      hangouts:{
+        create:{
+          location:$location
+          date:$time
+          placeName:$name
+        }
+      }
+    }
+  ) {
+    hangouts {
+      id
+      date
+      location
+      placeName
+      committedUsers {
+        name
+        googleid
+        image
+        email
+      }
+    }
+  }
+}`
+
+const HANGOUT_INFO = `
+query getHangout($id:ID!) {
+  hangouts(where:{id:$id}) {
+    date
+    location
+    placeName
+    committedUsers {
+      name
+      googleid
+      image
+      email
+    }
+  }
+}`
+
+const COMMIT = `
+mutation commitUser($userid:String!, $hangoutid:ID!) {
+  updateHangout(
+    where:{id:$hangoutid}
+    data:{
+      committedUsers:{
+        connect:{googleid:$userid}
+      }
+    }
+  ) {
+    id
+      date
+      location
+      placeName
+      committedUsers {
+        name
+        googleid
+        image
+        email
+      }
+  }
+}`
+
+const DECOMMIT = `
+mutation commitUser($userid:String!, $hangoutid:ID!) {
+  updateHangout(
+    where:{id:$hangoutid}
+    data:{
+      committedUsers:{
+        disconnect:{googleid:$userid}
+      }
+    }
+  ) {
+    id
+      date
+      location
+      placeName
+      committedUsers {
+        name
+        googleid
+        image
+        email
+      }
+  }
+}`
+
 module.exports = {
     LOGIN: LOGIN_MUTATION,
     NEW_GROUP: NEW_GROUP,
     USER_GROUP_QUERY: USER_GROUP_QUERY,
     USER_INFO: USER_INFO,
     CHANGE_GROUP_NAME: CHANGE_GROUP_NAME,
-    JOIN_GROUP: JOIN_GROUP
+    JOIN_GROUP: JOIN_GROUP,
+    CREATE_HANGOUT: CREATE_HANGOUT,
+    HANGOUT_INFO: HANGOUT_INFO,
+    COMMIT: COMMIT,
+    DECOMMIT:DECOMMIT,
 }
