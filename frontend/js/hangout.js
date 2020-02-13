@@ -1,5 +1,5 @@
 let SERVER = "https://inexpensive-beam-acp7cy33yt.glitch.me/"
-//SERVER = "http://localhost:8000"
+SERVER = "http://localhost:8000"
 
 //Another helper function from internet, it retrieves the little parameter when you do example.com?variable=something
 function getParameterByName(name, url) {
