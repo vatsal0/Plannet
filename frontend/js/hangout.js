@@ -1,3 +1,6 @@
+let SERVER = "https://inexpensive-beam-acp7cy33yt.glitch.me/"
+//SERVER = "http://localhost:8000"
+
 //Another helper function from internet, it retrieves the little parameter when you do example.com?variable=something
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -17,7 +20,7 @@ function dateFromISO8601(isostr) {
 $(document).ready(function(){
     let x,y,date,name,users;
     let id = getParameterByName("id");
-    fetch("http://localhost:8000/hangoutinfo/", {
+    fetch(SERVER+"/hangoutinfo/", {
         method: "POST",
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({id: id})
@@ -51,7 +54,7 @@ $(document).ready(function(){
         if (userDidCommit) $("#commit").hide(); else $("#decommit").hide();
 
         $("#commit").click(function() {
-            fetch("http://localhost:8000/commit/", {
+            fetch(SERVER+"/commit/", {
                 method: "POST",
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({userid: googleid, hangoutid: id})
@@ -65,7 +68,7 @@ $(document).ready(function(){
             });
         });
         $("#decommit").click(function() {
-            fetch("http://localhost:8000/decommit/", {
+            fetch(SERVER+"/decommit/", {
                 method: "POST",
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({userid: googleid, hangoutid: id})

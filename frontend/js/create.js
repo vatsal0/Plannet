@@ -1,7 +1,10 @@
 let loc, placeName, userdata;
 
+let SERVER = "https://inexpensive-beam-acp7cy33yt.glitch.me/"
+//SERVER = "http://localhost:8000"
+
 function updateUserData() {
-    fetch("http://localhost:8000/userinfo/", {
+    fetch(SERVER+"/userinfo/", {
         method: "POST",
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({userid: window.localStorage.getItem("UserId")})
@@ -50,7 +53,7 @@ $(document).ready(function(){
         if (time != "" && loc != null) {
             let groupindex = window.localStorage.getItem("groupviewindex");
             console.log(loc, time)
-            fetch("http://localhost:8000/newhangout/", {
+            fetch(SERVER+"/newhangout/", {
             method: "POST",
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({groupid: userdata.groups[groupindex].id, location: loc.toString(), time: time, name: placeName})
@@ -59,7 +62,7 @@ $(document).ready(function(){
                 let json = await data.json();
                 userdata.groups[groupindex].hangouts = json.hangouts;
                 let hangoutid = json.hangouts[json.hangouts.length-1].id;
-                window.location.href = "http://localhost:3000/hangout.html?id="+hangoutid;
+                window.location.href = "/hangout.html?id="+hangoutid;
             })
             .catch((error) => {
             console.error('Error:', error);

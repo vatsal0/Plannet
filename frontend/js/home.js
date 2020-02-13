@@ -1,8 +1,10 @@
 let userdata;
 
+let SERVER = "https://inexpensive-beam-acp7cy33yt.glitch.me/"
+//SERVER = "http://localhost:8000"
 //You can 99% of the time rely on userdata to be up to date, but if it isn't just call this function again
 function updateUserData() {
-    fetch("http://localhost:8000/userinfo/", {
+    fetch(SERVER+"/userinfo/", {
         method: "POST",
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({userid: window.localStorage.getItem("UserId")})
@@ -134,7 +136,7 @@ $(document).ready(async function() {
             //This will actually change the name of whatever group you have selected, not necessarily the one you clicked edit on
             //Too lazy to create another variable
             let groupId = userdata.groups[window.localStorage.getItem("groupviewindex")].id;
-            fetch("http://localhost:8000/groupname/", {
+            fetch(SERVER+"/groupname/", {
             method: "POST",
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({id: groupId, name: newName})
@@ -151,7 +153,7 @@ $(document).ready(async function() {
         let joinCode = $("#join-code").val();
         let userId = userdata.googleid;
         console.log(userId, joinCode)
-        fetch("http://localhost:8000/join/", {
+        fetch(SERVER+"/join/", {
         method: "POST",
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({userid: userId, code: joinCode})
@@ -170,7 +172,7 @@ $(document).ready(async function() {
         });
     })
     $("#create-button").click(function(){
-        fetch("http://localhost:8000/create/", {
+        fetch(SERVER+"/create/", {
             method: "POST",
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({userid: userdata.googleid})
