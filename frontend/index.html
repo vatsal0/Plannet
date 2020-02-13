@@ -1,23 +1,53 @@
 <!DOCTYPE html>
 <head>
     <meta charset='utf-8' />
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="js/signin.js"></script>
     <meta name="google-signin-client_id" content="331697660397-knlnre8o1qb7qmpnds2j07nhsntmdp7e.apps.googleusercontent.com">
     <!-- Fr localhost<meta name="google-signin-client_id" content="975459361176-0lh8jpvfrk8rv9op4ucfd6j0i84p6bop.apps.googleusercontent.com">-->
+    
     <link rel="icon" href="static/logo.ico">
-    <link rel = "stylesheet" href = "styles.css">
     <title>Plannet - Login</title>
+
+<style>  
+   html, body{
+        height: 100%;
+        background-repeat: no-repeat;
+        background-image: linear-gradient(to bottom right, #0F52BA, #4682B4);
+    }     
+    h1{
+        color: white;
+        font-size: 6em;
+        font-family: 'PT Sans', sans-serif;
+        text-align: center;
+        margin: .25em 0em .25em 0em;
+    }
+    h2{
+        color: gray;
+        font-size: 2em;
+        font-family: 'PT Sans', sans-serif;
+        text-align: center;
+        margin: 0em 0em .25em 0em;
+    }
+    nav-wrapper{
+        background-color: #161616;
+
+    }
+</style>   
 </head>
 
 <body>
-    <nav class = "navbar navbar-dark bg-dark">
-        <img src = "static/logo.ico" alt = "Plannet"></img>
-        <p>Plannet</p>
+    <nav class = "black">
+        <div class="nav-wrapper">
+          <a href="#" class="brand-logo"><img src = "static/logo.ico"> Plannet</a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><div class="g-signin2" data-onsuccess="onSignIn"></div></li>
+          </ul>
+        </div>
     </nav>
-    <img src="static/logo.svg" height="10%">
     <h1>Plan it with Plannet!</h1>
     <h2>A simple and accessible platform for friends to collaboratively plan hangouts.</h2>
     <div id='map'></div>
