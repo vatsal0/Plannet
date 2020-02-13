@@ -1,16 +1,14 @@
-let loc;
-let placeName;
+let loc, placeName, userdata;
 
 function updateUserData() {
-    let userdata = JSON.parse(window.localStorage.getItem("UserData"));
     fetch("http://localhost:8000/userinfo/", {
         method: "POST",
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({userid: userdata.googleid})
+        body: JSON.stringify({userid: window.localStorage.getItem("UserId")})
     })
     .then(async function(data) {
         let json = await data.json();
-        window.localStorage.setItem("UserData", JSON.stringify(json));
+        userdata = json;
     })
     .catch((error) => {
     console.error('Error:', error);
@@ -48,7 +46,6 @@ $(document).ready(function(){
     $("#create-button").click(function(){
         let time = $("#time").val();
         if (time != "" && loc != null) {
-            let userdata = JSON.parse(window.localStorage.getItem("UserData"));
             let groupindex = window.localStorage.getItem("groupviewindex");
             console.log(loc, time)
             fetch("http://localhost:8000/newhangout/", {
@@ -59,7 +56,6 @@ $(document).ready(function(){
             .then(async function(data) {
                 let json = await data.json();
                 userdata.groups[groupindex].hangouts = json.hangouts;
-                window.localStorage.setItem("UserData", userdata);
                 let hangoutid = json.hangouts[json.hangouts.length-1].id;
                 window.location.href = "http://localhost:3000/hangout.html?id="+hangoutid;
             })

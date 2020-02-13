@@ -1,3 +1,4 @@
+//Another helper function from internet, it retrieves the little parameter when you do example.com?variable=something
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, '\\$&');
@@ -24,6 +25,7 @@ $(document).ready(function(){
     .then(async function(data) {
         let json = await data.json();
         let coords = json.location;
+        //Coordinates are stored in the form "69, 69" because that's just how arrays convert
         x = parseFloat(coords.split(",")[0]);
         y = parseFloat(coords.split(",")[1]);
         date = dateFromISO8601(json.date);
@@ -40,9 +42,10 @@ $(document).ready(function(){
         $("#place").text(name);
         $("#time").text(date);
 
-        let googleid = JSON.parse(window.localStorage.getItem("UserData")).googleid;
+        let googleid = window.localStorage.getItem("UserId");
         let userDidCommit = false
         for (let i = 0; i < users.length; i++) {
+            //If user shows up in list of commits, they committed
             if (users[i].googleid == googleid) userDidCommit = true;
         }
         if (userDidCommit) $("#commit").hide(); else $("#decommit").hide();
@@ -75,6 +78,8 @@ $(document).ready(function(){
             console.error('Error:', error);
             });
         });
+        
+        //Map api stuff, pretty straightforward I just pasted it
         mapboxgl.accessToken = 'pk.eyJ1IjoiZmF0c2FsIiwiYSI6ImNrNmlhbDl4ajE1cnkzbm9lcHMyMm5ucWsifQ.5jnQlCJzK6e3DuiYQCk4VQ';
         var map = new mapboxgl.Map({
             container: 'map', // Container ID
@@ -92,10 +97,4 @@ $(document).ready(function(){
     .catch((error) => {
     console.error('Error:', error);
     });
-
-    
-
-    
-
-    
 });
