@@ -53,7 +53,7 @@ const NEW_GROUP = `mutation newGroup($name: String!, $code: String!, $id: String
       image
       groups {
         id
-        name
+        name 
         users {
           name
           email
