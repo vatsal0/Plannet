@@ -5,7 +5,8 @@ SERVER = "http://localhost:8000"
 //You can 99% of the time rely on userdata to be up to date, but if it isn't just call this function again
 function updateUserData() {
     let id = window.localStorage.getItem("UserId");
-    fetch(SERVER+"/userinfo/", {
+    if (!id) window.location.href = "/indiex.html"
+     fetch(SERVER+"/userinfo/", {
         method: "POST",
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({userid: id})
