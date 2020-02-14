@@ -4,13 +4,15 @@ let SERVER = "https://inexpensive-beam-acp7cy33yt.glitch.me/"
 SERVER = "http://localhost:8000"
 //You can 99% of the time rely on userdata to be up to date, but if it isn't just call this function again
 function updateUserData() {
+    let id = window.localStorage.getItem("UserId");
     fetch(SERVER+"/userinfo/", {
         method: "POST",
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({userid: window.localStorage.getItem("UserId")})
+        body: JSON.stringify({userid: id})
     })
     .then(async function(data) {
         let json = await data.json();
+        $("#user-image").attr("src", json.image);
         $("#user-heading").text("Welcome, " + json.name.split(" ")[0]);
         updateGroupBox(json.groups);
         userdata = json;
@@ -38,15 +40,20 @@ function updateGroupBox(groups) {
         let nextHangoutText = "None";
         if (groups[i].hangouts.length > 0) {
             //Get the first hangout from sorted order
-            nextHangoutText = dateFromISO8601(sortedHangouts(groups[i].hangouts)[0].date);
+            nextHangoutText = dateFromISO8601(sortedHangouts(groups[i].hangouts)[0].date) + " @ " + groups[i].hangouts[0].placeName;
         }
         //Create html element for group list entry
         let groupButton = $(
-            `<button type="button" class="list-group-item list-group-item-action" id=`+i+`>
-                <h6>`+groups[i].name+`</h6>
-                <p>`+groups[i].users.length+` member(s)</p>
-                <h6>Next hangout:</h6>
-                <p>`+nextHangoutText+`</p>
+            `<button type="button" class="card" style="margin: 10px 5% 10px 5%; display: flex; flex-direction: row;" id=`+i+`>
+                    <div style="width:40%; padding-left: 5%">
+                        <h6 style="text-align: left">`+groups[i].name+`</h6>
+                        <p style="text-align: left">`+groups[i].users.length+` member(s)</p>
+                    </div>
+                    <div>
+                        <h6 style="text-align: left">Next hangout:</h6>
+                        <p style="text-align: left">`+nextHangoutText+`</p>
+                    </div>
+                    
             </button>`)
         groupButton.click(function(){
             updateGroupInfo(groups[groupButton.attr('id')]);
@@ -88,11 +95,16 @@ function updateGroupInfo(group) {
     for(let i = 0; i < group.users.length; i++) {
         //Append list element of group user info
         $("#members-box").append(`
-        <li class="list-group-item"; style="display: flex; flex-direction: row;">
-            <img src="`+group.users[i].image+`" style="width: 50px;"></img>
+        <li class="list-group-item"; style="display: flex; flex-direction: row; height: 20%; margin: 5% 5% 0% 5%">
+            <img src="`+group.users[i].image+`" style="height: 100%; border-radius: 100%; margin: 0% 5% 0% -5%"></img>
             <div style="display: flex; flex-direction: column">
-                <h4>`+group.users[i].name+`</h4>
-                <h6>`+group.users[i].email+`</h6>
+                <div style="flex-shrink:1; flex-grow: 1; height: 50%; text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
+                `+group.users[i].name+`
+                </div>
+                <div style="flex-shrink:1; flex-grow:1; height: 50%; font-size: 0.5rem">
+                <p>`+group.users[i].email+`</p>
+                </div>
+                
             </div>
         </li>`);
     }
@@ -100,14 +112,18 @@ function updateGroupInfo(group) {
     let hangouts = sortedHangouts(group.hangouts)
     for(let i = 0; i < hangouts.length; i++) {
         let date = dateFromISO8601(hangouts[i].date);
+        let suf = "people";
+        if (hangouts[i].committedUsers.length<=1) suf = "person";
+        let text = hangouts[i].committedUsers.length + " " + suf
+        if (hangouts[i].committedUsers.length==0) text = "No one yet";
         $("#hangouts-box").append(`
-        <li class="list-group-item"; style="display: flex; flex-direction: row;">
-            <div style="display: flex; flex-direction: column">
-                <h4>`+hangouts[i].placeName+`</h4>
-                <div style="display: flex; flex-direction: row">
-                    <h6>`+date+`</h6>
-                    <h4>`+hangouts[i].committedUsers.length+` people</h4>
-                    <button type="button" class="btn btn-primary" id="view-`+i+`">View</button>
+        <li class="list-group-item"; style="display: flex; flex-direction: row; height: 23%; margin: 5% 5% 0% 5%">
+            <div>
+                <p style="text-overflow: ellipsis; overflow: hidden; height: 40%; width: 100%">`+hangouts[i].placeName+`</p>
+                <div style="display: flex; flex-direction: row; height: 50%; justify-content: space-between">
+                    <p style="font-size: 0.6rem;">`+date+`</p>
+                    <p style="font-size: 0.6rem">`+text +`</p>
+                    <button style="height:80%; text-align: center" class="blue btn" id="view-`+i+`"><p style="margin-top: -25%">View</p></button>
                 </div>
             </div>
         </li>`);

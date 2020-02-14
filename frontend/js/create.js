@@ -53,17 +53,30 @@ $(document).ready(function(){
 
     $('.datepicker').datepicker();
     $('.timepicker').timepicker();
+    $('.datepicker').val("");
+    $('.timepicker').val("");
     
     $(".mapboxgl-ctrl-geocoder--input").addClass("browser-default")
     $("#create-button").click(function(){
-        let time = $("#time").val();
-        if (time != "" && loc != null) {
+
+        let date = $('.datepicker').val();
+        let time = $('.timepicker').val();
+        if (date != "" && time != "" && loc != null) {
+            let hrmin = time.split(" ")[0];
+            let ampm = time.split(" ")[1];
+            let hr = parseInt(hrmin.split(":")[0]) - (new Date().getTimezoneOffset())/60;
+            let min = parseInt(hrmin.split(":")[1]);
+            if (ampm == "PM") hr = hr + 12;
+            hr = (hr + 24)%24;
+            console.log(hr, min)
+            time = hr + ":" + min;
+            date = new Date(date + " " + time);
+            
             let groupindex = window.localStorage.getItem("groupviewindex");
-            console.log(loc, time)
             fetch(SERVER+"/newhangout/", {
             method: "POST",
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({groupid: userdata.groups[groupindex].id, location: loc.toString(), time: time, name: placeName})
+            body: JSON.stringify({groupid: userdata.groups[groupindex].id, location: loc.toString(), time: date.toISOString(), name: placeName})
             })
             .then(async function(data) {
                 let json = await data.json();
@@ -74,8 +87,7 @@ $(document).ready(function(){
             .catch((error) => {
             console.error('Error:', error);
             });
-        
-        } else {alert("Please fill out a time and a place.")}
+        } else {alert("Please fill out a date, a time, and a place.")}
     });
     
 })

@@ -5,12 +5,6 @@
     <link rel="icon" href="static/logo.ico">
     <title>Home - Plannet</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -18,47 +12,67 @@
     <script src="js/home.js"></script>
 </head>
 <html>
-<body>
+<body class="black"> 
+    
+    <nav style="height: 10%;">
+        <div class="nav-wrapper teal">
+            <img class="brand-logo" src="static/logo.svg" style="height: 80%; top: 10%; left: 1%;"></img>
+            <ul id="nav-mobile" class="right hide-on-med-and-down" style="width: 40%; display: flex; justify-content: flex-end;">
+                <li style="padding-right: 5%; width: 30%;"><input type="text" id="join-code" placeholder="Enter a group code:"></li>
+                <li style="padding-right: 5%;"><button type="button" class="btn blue" id="join-button">Join</button></li>
+                <li style="padding-right: 5%;"><button type="button" class="btn green darken-1" id="create-button">Create</button></li>
+            </ul>
+        </div>
+    </nav>
 
-    <h1 id="user-heading">Welcome, </h1>
-    <input type="text" class="form-control" id="join-code" placeholder="Enter a group code:" style="width: 200px;">
-    <button type="button" class="btn btn-primary" id="join-button">Join</button>
-    <button type="button" class="btn btn-success" id="create-button">Create</button>
+    <div style="height: 90%; display: flex;">
+        <div style="width: 50%;">
+            <div style="height: 10%; display: flex; margin: 5% 10% 5% 10%;">
+                <img id= "user-image" src="" style="border-radius: 50%; height: 100%;">
+                <h3 id="user-heading" class="text-white" style="vertical-align: middle; padding-left: 3%;">Welcome, </h3>
+            </div>
+            <div class="grey card" style="width:80%; margin: 5% 10% 5% 10%;">
+                <h5 class="white-text" style="text-align: center;">My groups</h5>
+                <div class="list-group" id="groups-box"></div>
+            </div>
+        </div>
+        <div style="width: 50%;">
+            <div class="teal card" style="width:80%; margin: 5% 10% 5% 10%; height: 85%" id="group-info">
+                <div class="grey card" style="display: flex; flex-direction: row; justify-content: space-evenly; height: 10%; margin: 2.5% 5% 2.5% 5%; align-items:center;">
+                    <h5 style="text-align: center; display: inline-block; flex-grow: 1;" class="white-text" id="group-name">name</h5>
+                    <button style="flex-grow: 1;" type="button" class="btn btn-primary" id="edit-name">Edit</button>
+                    
+                    <h5 style="text-align: center; flex-grow: 6;" id="group-code" class="white-text">name</h5>
+                </div>
 
-    <div class="card" style="width:600px">
-        <h5 style="text-align: center;">My groups</h5>
-        <div class="list-group" id="groups-box"></div>
+                <button type="button" class="btn green" id="new-hangout" style="margin: 0% 5% 0% 5%; height: 8%;">New Hangout</button>
+
+                <div style="flex-grow: 5; display: flex; flex-direction: row; height: 60%;">
+                    <div style="width: 44%; margin: 0% 1% 0% 5%;">
+                        <h5 style="text-align: center; height: 10%;" class="white-text">Members</h5>
+                        <div class="list-group grey card" id="members-box" style="height: 80%; overflow: auto;"></div>
+                    </div>
+                    
+                    <div style="width: 44%; margin: 0% 5% 0% 1%;">
+                        <h5 style="text-align: center; height: 10%;" class="white-text">Hangouts</h5>
+                        <div class="list-group grey card" id="hangouts-box" style="height: 80%; overflow: auto;"></div>
+                    </div>
+                    
+                </div>
+        
+                <form style="width: 20%; height: 20%; left: 40%; top: 40%; position: absolute; z-index: 100; visibility: hidden;" id="name-change" >
+                    <div class="form-group card">
+                      <label for="name-input-box">Change name</label>
+                      <input type="text" class="form-control" id="name-input-box" placeholder="Enter here:">
+                      <button type="button" class="btn btn-primary" id="name-change-button">Confirm</button>
+                    </div>
+                </form>
+        </div>
     </div>
-    <div class="card" style="width:600px; display: flex; flex-direction: column;" id="group-info">
-        <div style="display: flex; flex-direction: row; flex-grow: 1; justify-content: space-evenly;">
-            <div>
-                <h5 style="text-align: center; display: inline;" id="group-name">name</h5>
-                <button type="button" style="display: inline;" class="btn btn-primary" id="edit-name">Edit</button>
-            </div>
-            
-            <h5 style="text-align: center;" id="group-code">name</h5>
-            <button type="button" class="btn btn-success" id="new-hangout">New Hangout</button>
-        </div>
-        <div style="flex-grow: 5; display: flex; flex-direction: row;">
-            <div style="width: 50%;">
-                <h3>Members</h3>
-                <div class="list-group" id="members-box"></div>
-            </div>
-            
-            <div style="width: 50%;">
-                <h3>Hangouts</h3>
-                <div class="list-group" id="hangouts-box"></div>
-            </div>
-            
-        </div>
 
-        <form style="width: 20%; height: 20%; left: 40%; top: 40%; position: absolute; z-index: 100; visibility: hidden;" id="name-change" >
-            <div class="form-group card">
-              <label for="name-input-box">Change name</label>
-              <input type="text" class="form-control" id="name-input-box" placeholder="Enter here:">
-              <button type="button" class="btn btn-primary" id="name-change-button">Confirm</button>
-            </div>
-        </form>
+
+    
+    
     </div>
     
     

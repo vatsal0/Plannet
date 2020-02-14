@@ -1,34 +1,50 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <!DOCTYPE html>
 <head>
     <meta charset='utf-8' />
+    <link rel="icon" href="static/logo.ico">
+    <title>Home - Plannet</title>
 
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css' rel='stylesheet' />
 
     <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.min.js'></script>
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.css' type='text/css' />
-    
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="js/hangout.js"></script>
 
 </head>
 <html>
-<body>
-    <div id='map' style="width: 500px; height: 500px;"></div>
-    <h1 id="place">Place</h1>
-    <h1 id="time">Time</h1>
-    <h4 id="commits">... will come</h4>
-    <button type="button" class="btn btn-success" id="commit">Commit</button>
-    <button type="button" class="btn btn-danger" id="decommit">Decommit</button>
+<body class="black" style="overflow: hidden;">
+
+    <nav style="height: 10%;">
+        <div class="nav-wrapper teal">
+            <img class="brand-logo" src="static/logo.svg" style="height: 80%; top: 10%; left: 1%;"></img>
+            <a href="/home.html" class="red btn" style="margin: 1% 0% 0% 6%; height: 50%;">GO BACK</a>
+            <ul id="nav-mobile" class="left hide-on-med-and-down" style="width: 40%; display: flex; justify-content: flex-end;">
+                <li style="padding-right: 5%;"></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div style="height: 90%; display: flex; flex-direction: row;">
+        <div class="grey card" style="height: 90%; width: 45%; margin: 2.5%;">
+            <div id='map' class="card" style="width: 90%; height: 90%; margin: 5%"></div>
+        </div>
+        <div class="teal card" style="height: 60%; width: 45%; margin: 2.5%; margin-top: 9%;">
+            <h3 id="place" class="white-text" style="text-align: center;">Place</h3>
+            <h3 id="time" class="white-text" style="text-align: center;">Time</h3>
+            <h4 id="commits" class="white-text" style="text-align: center;">... will come</h4>
+            <button type="button" class="btn green" id="commit" style="width: 50%; margin-left: 25%;">Commit</button>
+            <button type="button" class="btn red" id="decommit" style="width: 50%; margin-left: 25%;">Decommit</button>
+        </div>
+    
+    </div>
+
+    
 </body>
 </html>
